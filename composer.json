@@ -5,7 +5,7 @@
     "homepage": "http://github.com/onlinecity/php-smpp",
     "type": "library",
     "minimum-stability": "stable",
-    "license": "pache-2.0",
+    "license": "Apache-2.0",
     "authors": [
         {
             "name": "Alexey Morilov",
