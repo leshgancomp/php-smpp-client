@@ -2,6 +2,6 @@
 
 namespace Exploit;
 
-class SocketTransportException extends RuntimeException {
+class SocketTransportException extends \RuntimeException {
     
 }
