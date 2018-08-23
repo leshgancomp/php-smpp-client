@@ -5,6 +5,7 @@ require_once dirname(__FILE__) . '/../src/smpp-client/SmppClient.php';
 require_once dirname(__FILE__) . '/../src/smpp-client/SocketTransport.php';
 require_once dirname(__FILE__) . '/../src/smpp-client/SocketTransportException.php';
 
+
 // Construct transport and client
 $transport = new SocketTransport(array('127.0.0.1'), 2775);
 $transport->setRecvTimeout(100000);
