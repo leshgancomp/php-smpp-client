@@ -1,0 +1,28 @@
+{
+    "name": "leshgancomp/php-smpp-client",
+    "description": "PHP-based SMPP client library",
+    "keywords": ["smpp", "sms", "texting", "gsm"],
+    "homepage": "http://github.com/onlinecity/php-smpp",
+    "type": "library",
+    "minimum-stability": "stable",
+    "license": "Apache License 2.0",
+    "authors": [
+        {
+            "name": "Alexey Morilov",
+            "email": "web@exploit-it.ru",
+            "homepage": "http://exploit-it.ru"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.3",
+        "ext-sockets": "*",
+        "ext-mbstring": "*"
+    },
+    "require-dev": {
+    },
+    "autoload": {
+        "psr-4": {
+            "Exploit\\": "src/smpp-client"
+        }
+    }
+}
