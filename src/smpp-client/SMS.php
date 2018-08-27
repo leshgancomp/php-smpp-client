@@ -1,6 +1,6 @@
 <?php
 
-namespace Esploit\Smpp;
+namespace Exploit\Smpp;
 
 class SMS {
     
