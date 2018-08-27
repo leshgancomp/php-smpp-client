@@ -7,11 +7,13 @@ class SMS {
     private $socket;
     private $sequence_number = 1;
     
-    public static $SMSC_HOST;
     public static $SMSC_PORT = 2776;
-    public static $SMSC_LOGIN;
-    public static $SMSC_PASSWORD;
     public static $SMSC_CHARSET = "utf-8";
+    
+    private $SMSC_HOST;
+    private $SMSC_LOGIN;
+    private $SMSC_PASSWORD;
+    
     
     public static $source_addr_ton = 0;
     public static $source_addr_npi = 0;
@@ -19,14 +21,14 @@ class SMS {
     public static $dest_addr_npi = 1;
 
     public function __construct($login,$password,$host) {
-        self::$SMSC_HOST = $host;
-        self::$SMSC_LOGIN = $login;
-        self::$SMSC_PASSWORD = $password;
-        $ip = gethostbyname(self::SMSC_HOST);
+        $this->SMSC_HOST = $host;
+        $this->SMSC_LOGIN = $login;
+        $this->SMSC_PASSWORD = $password;
+        $ip = gethostbyname($this->SMSC_HOST);
 
         $this->socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
 
-        if (!$this->socket || !socket_connect($this->socket, $ip, self::SMSC_PORT))
+        if (!$this->socket || !socket_connect($this->socket, $ip, self::$SMSC_PORT))
             throw new \Exception(socket_strerror(socket_last_error()));
 
         if (!$this->bind())
@@ -63,7 +65,7 @@ class SMS {
     }
 
     private function bind($system_type = '') {
-        $pdu = pack("a" . strlen(self::SMSC_LOGIN) . "xa" . strlen(self::SMSC_PASSWORD) . "xa" . strlen($system_type) . "xCCCx", self::SMSC_LOGIN, self::SMSC_PASSWORD, $system_type, 0x34, 5, 1); // body
+        $pdu = pack("a" . strlen($this->SMSC_LOGIN) . "xa" . strlen($this->SMSC_PASSWORD) . "xa" . strlen($system_type) . "xCCCx", $this->SMSC_LOGIN, $this->SMSC_PASSWORD, $system_type, 0x34, 5, 1); // body
         $pdu = pack("NNNN", strlen($pdu) + 16, 0x02/* BIND_TRANSMITTER */, 0, $this->sequence_number) . $pdu; // header + body
         return $this->send_pdu($pdu);
     }
@@ -91,7 +93,7 @@ class SMS {
     
     public function sendMessage($phone, $message, $sender = ".", $valid = "", $use_tlv = true, $time = "") { // $message в кодировке SMSC_CHARSET
         if (preg_match('/[`\x80-\xff]/', $message)) { // is UCS chars
-            $message = iconv(self::SMSC_CHARSET, "UTF-16BE", $message);
+            $message = iconv(self::$SMSC_CHARSET, "UTF-16BE", $message);
             $coding = 2; // UCS2
         } else
             $coding = 0; // 7bit
@@ -116,11 +118,11 @@ class SMS {
         }
 
         $pdu = pack("xCCa" . strlen($sender) . "xCCa" . strlen($phone) . "xCCCa" . strlen($time) . "xa" . strlen($valid) . "xCCCC", // body
-                        self::source_addr_ton, // source_addr_ton
-                        self::source_addr_npi, // source_addr_npi
+                        self::$source_addr_ton, // source_addr_ton
+                        self::$source_addr_npi, // source_addr_npi
                         $sender, // source_addr
-                        self::dest_addr_ton, // dest_addr_ton
-                        self::dest_addr_npi, // dest_addr_npi
+                        self::$dest_addr_ton, // dest_addr_ton
+                        self::$dest_addr_npi, // dest_addr_npi
                         $phone, // destination_addr
                         0, // esm_class
                         0, // protocol_id
