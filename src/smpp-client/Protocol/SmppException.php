@@ -1,5 +1,6 @@
 <?php
-namespace Exploit;
+
+namespace Exploit\Smpp\Protocol;
 
 class SmppException extends \RuntimeException {
     

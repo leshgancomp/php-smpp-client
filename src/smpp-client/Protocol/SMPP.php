@@ -1,6 +1,6 @@
 <?php
 
-namespace Exploit;
+namespace Exploit\Smpp\Protocol;
 
 /**
  * Numerous constants for SMPP v3.4

@@ -22,7 +22,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Exploit\\": "src/smpp-client"
+            "Exploit\\Smpp\\": "src/smpp-client"
         }
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Exploit;
+namespace Exploit\Smpp\Protocol;
 
 /**
  * Primitive class for encapsulating PDUs
